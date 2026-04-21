@@ -1,0 +1,593 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: HPDC Certificate Verification API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: certificates
+    description: Certificate operations
+  - name: users
+    description: User/Company account operations
+  - name: applications
+    description: Certification application operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /certificates/{certificateId}:
+    patch:
+      operationId: updateCertificate
+      tags: [certificates]
+      summary: Update certificate status or fields (admin)
+      parameters:
+        - name: certificateId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCertificateBody"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certificate"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      operationId: getCertificate
+      tags: [certificates]
+      summary: Get certificate by ID (public)
+      parameters:
+        - name: certificateId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Certificate found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certificate"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /certificates:
+    get:
+      operationId: listCertificates
+      tags: [certificates]
+      summary: List all certificates (admin)
+      responses:
+        "200":
+          description: List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Certificate"
+    post:
+      operationId: createCertificate
+      tags: [certificates]
+      summary: Create certificate (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCertificateBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certificate"
+
+  /certificates/stats/summary:
+    get:
+      operationId: getCertificateStats
+      tags: [certificates]
+      summary: Stats summary (admin)
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CertificateStats"
+
+  /users/me:
+    get:
+      operationId: getMe
+      tags: [users]
+      summary: Get current user profile
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /users/me/certificates:
+    get:
+      operationId: getMyCertificates
+      tags: [users]
+      summary: Get certificates for the logged-in company
+      responses:
+        "200":
+          description: Company certificates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Certificate"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /users/sync:
+    post:
+      operationId: syncUser
+      tags: [users]
+      summary: Sync Clerk user to local DB after login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SyncUserBody"
+      responses:
+        "200":
+          description: User synced
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+  /users:
+    get:
+      operationId: listUsers
+      tags: [users]
+      summary: List all users (admin only)
+      responses:
+        "200":
+          description: All users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserProfile"
+
+  /users/{userId}/role:
+    patch:
+      operationId: updateUserRole
+      tags: [users]
+      summary: Update user role (admin only)
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserRoleBody"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+  /applications:
+    post:
+      operationId: createApplication
+      tags: [applications]
+      summary: Submit a new certification application (company)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateApplicationBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+    get:
+      operationId: listApplications
+      tags: [applications]
+      summary: List all applications (admin)
+      responses:
+        "200":
+          description: All applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Application"
+
+  /applications/my:
+    get:
+      operationId: getMyApplications
+      tags: [applications]
+      summary: Get my applications (company)
+      responses:
+        "200":
+          description: My applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Application"
+
+  /applications/{id}/stage:
+    patch:
+      operationId: updateApplicationStage
+      tags: [applications]
+      summary: Update application stage (admin)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateApplicationStageBody"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    Certificate:
+      type: object
+      properties:
+        id:
+          type: string
+        certificateId:
+          type: string
+        status:
+          type: string
+          enum: [valid, expired, suspended]
+        companyName:
+          type: string
+        siteName:
+          type: string
+        location:
+          type: string
+        issueDate:
+          type: string
+        expiryDate:
+          type: string
+        certificationBody:
+          type: string
+        schemeOwner:
+          type: string
+        scopeStatement:
+          type: string
+        verificationMessage:
+          type: string
+        companyClerkId:
+          type: string
+          nullable: true
+      required:
+        - id
+        - certificateId
+        - status
+        - companyName
+        - siteName
+        - location
+        - issueDate
+        - expiryDate
+        - certificationBody
+        - schemeOwner
+        - scopeStatement
+        - verificationMessage
+
+    CreateCertificateBody:
+      type: object
+      properties:
+        certificateId:
+          type: string
+        status:
+          type: string
+          enum: [valid, expired, suspended]
+        companyName:
+          type: string
+        siteName:
+          type: string
+        location:
+          type: string
+        issueDate:
+          type: string
+        expiryDate:
+          type: string
+        certificationBody:
+          type: string
+        schemeOwner:
+          type: string
+        scopeStatement:
+          type: string
+        verificationMessage:
+          type: string
+        companyClerkId:
+          type: string
+          nullable: true
+      required:
+        - certificateId
+        - status
+        - companyName
+        - siteName
+        - location
+        - issueDate
+        - expiryDate
+        - certificationBody
+        - schemeOwner
+        - scopeStatement
+        - verificationMessage
+
+    CertificateStats:
+      type: object
+      properties:
+        total:
+          type: integer
+        valid:
+          type: integer
+        expired:
+          type: integer
+        suspended:
+          type: integer
+      required:
+        - total
+        - valid
+        - expired
+        - suspended
+
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        clerkId:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum: [admin, company]
+        companyName:
+          type: string
+          nullable: true
+      required:
+        - id
+        - clerkId
+        - email
+        - role
+
+    SyncUserBody:
+      type: object
+      properties:
+        clerkId:
+          type: string
+        email:
+          type: string
+        companyName:
+          type: string
+          nullable: true
+      required:
+        - clerkId
+        - email
+
+    UpdateCertificateBody:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [valid, expired, suspended]
+        companyName:
+          type: string
+        siteName:
+          type: string
+        location:
+          type: string
+        issueDate:
+          type: string
+        expiryDate:
+          type: string
+        certificationBody:
+          type: string
+        schemeOwner:
+          type: string
+        scopeStatement:
+          type: string
+        verificationMessage:
+          type: string
+        companyClerkId:
+          type: string
+          nullable: true
+
+    UpdateUserRoleBody:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [admin, company]
+      required:
+        - role
+
+    Application:
+      type: object
+      properties:
+        id:
+          type: string
+        applicationNumber:
+          type: string
+        clerkId:
+          type: string
+        companyName:
+          type: string
+        contactName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        sector:
+          type: string
+        siteName:
+          type: string
+        siteLocation:
+          type: string
+        notes:
+          type: string
+          nullable: true
+        stage:
+          type: string
+          enum: [submitted, under_review, assessment_scheduled, assessment_done, approved, certificate_issued, rejected]
+        stageNotes:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          nullable: true
+        updatedAt:
+          type: string
+          nullable: true
+      required:
+        - id
+        - applicationNumber
+        - clerkId
+        - companyName
+        - contactName
+        - email
+        - phone
+        - sector
+        - siteName
+        - siteLocation
+        - stage
+
+    CreateApplicationBody:
+      type: object
+      properties:
+        companyName:
+          type: string
+        contactName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        sector:
+          type: string
+        siteName:
+          type: string
+        siteLocation:
+          type: string
+        notes:
+          type: string
+          nullable: true
+      required:
+        - companyName
+        - contactName
+        - email
+        - phone
+        - sector
+        - siteName
+        - siteLocation
+
+    UpdateApplicationStageBody:
+      type: object
+      properties:
+        stage:
+          type: string
+          enum: [submitted, under_review, assessment_scheduled, assessment_done, approved, certificate_issued, rejected]
+        stageNotes:
+          type: string
+          nullable: true
+      required:
+        - stage
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message

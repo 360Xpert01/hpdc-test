@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "HPDC Certificate Verification Platform"
+version = "1.0.0"
+id = "artifacts/hpdc-cert"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22362
+
+[services.development]
+run = "pnpm --filter @workspace/hpdc-cert run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/hpdc-cert", "run", "build" ]
+publicDir = "artifacts/hpdc-cert/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22362"
+BASE_PATH = "/"

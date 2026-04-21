@@ -1,0 +1,211 @@
+uploads = []
+
+[[generated]]
+id = "9vKScQgE4iKGMbQeFr2A4"
+uri = "file://artifacts/hpdc-cert/public/hero-esg.png"
+type = "image"
+title = "Riyadh towers inspired hero"
+
+[[generated]]
+id = "6XqHP8AV3rhGN3BC9usct"
+uri = "file://artifacts/hpdc-cert/public/governance-meeting.png"
+type = "image"
+title = "Saudi boardroom governance meeting"
+
+[[generated]]
+id = "dy3bidtbyR9LLfwDl6-CH"
+uri = "file://artifacts/hpdc-cert/public/environmental-pillar.png"
+type = "image"
+title = "Saudi Arabia solar farm desert"
+
+[[generated]]
+id = "XA-ctADIjzLNO9C_zPptM"
+uri = "file://artifacts/hpdc-cert/public/social-pillar.png"
+type = "image"
+title = "Saudi social responsibility community"
+
+[[generated]]
+id = "nSWlVkzRNs4laMSOOYzcq"
+uri = "file://artifacts/hpdc-cert/public/governance-pillar.png"
+type = "image"
+title = "Saudi governance certification signing"
+
+[[generated]]
+id = "vayFGd8BrCGFbJkiC04tZ"
+uri = "file://artifacts/hpdc-cert/public/hero-riyadh.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "MIv6QDC974FU28O9zDZDO"
+uri = "file://artifacts/hpdc-cert/public/governance-meeting.jpg.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "P3cR_8NAWTOsfx5OZJiie"
+uri = "file://artifacts/hpdc-cert/public/social-pillar-new.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "FiMSwvHcwm0aVDoZ1t7Qo"
+uri = "file://artifacts/hpdc-cert/public/esg-hero.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "Hl__r7FH-2PvelUk23E9_"
+uri = "file://artifacts/hpdc-cert/public/esg-environmental.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "1xzBUY2zBzMVDPWYkZZd3"
+uri = "file://artifacts/hpdc-cert/public/esg-social.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "fJyekuFgli3dn301v6At1"
+uri = "file://artifacts/hpdc-cert/public/esg-governance.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "pcBamCC4Tl8XcaCjK8p7Y"
+uri = "file://artifacts/hpdc-cert/public/esg-value.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "Xkw0yDjWhZqr7479n2Qts"
+uri = "file://attached_assets/generated_images/generated_image.png"
+type = "image"
+title = "generated_image"
+
+[[outputs]]
+id = "a9D8xivg5303EO2m5Ndhk"
+uri = "file://attached_assets/stock_images/saudi-boardroom.jpg"
+type = "image"
+title = "Saudi Arabia business executives meeting boardroom corporate governance"
+
+[[outputs]]
+id = "LP3l0zFMnkjNsvvpAb8Bj"
+uri = "file://attached_assets/stock_images/saudi-solar-energy.jpg"
+type = "image"
+title = "Saudi Arabia desert solar panels renewable energy farm"
+
+[[outputs]]
+id = "q3gZi0OMXfxEi7dlh4y18"
+uri = "file://attached_assets/stock_images/riyadh-skyline.jpg"
+type = "image"
+title = "Riyadh Saudi Arabia skyline Kingdom Centre Tower modern city aerial view golden hour"
+
+[[outputs]]
+id = "LcTT6efJWej9NAExrDPqu"
+uri = "file://attached_assets/stock_images/saudi-social.jpg"
+type = "image"
+title = "Saudi Arabia community volunteers social responsibility charity"
+
+[[outputs]]
+id = "3kvlQQAn9bd4rOy3arpau"
+uri = "file://attached_assets/stock_images/saudi-governance.jpg"
+type = "image"
+title = "Saudi Arabia corporate executive signing official document certificate"
+
+[[outputs]]
+id = "KXZt9PPnJIs9rdbANSEh_"
+uri = "file://attached_assets/stock_images/riyadh-hero_1.jpg"
+type = "image"
+title = "Riyadh Saudi Arabia KAFD financial district modern skyscrapers aerial view cityscape high quality"
+
+[[outputs]]
+id = "jnekzVd7kLNbjFNAbW188"
+uri = "file://attached_assets/stock_images/riyadh-hero_2.jpg"
+type = "image"
+title = "Riyadh Saudi Arabia KAFD financial district modern skyscrapers aerial view cityscape high quality"
+
+[[outputs]]
+id = "Ly5PwWAMISIkyeeihvYZr"
+uri = "file://attached_assets/stock_images/riyadh-hero_3.jpg"
+type = "image"
+title = "Riyadh Saudi Arabia KAFD financial district modern skyscrapers aerial view cityscape high quality"
+
+[[outputs]]
+id = "-KoRgTLNcSqAw0BmhO0EJ"
+uri = "file://attached_assets/stock_images/riyadh-ksa_1.jpg"
+type = "image"
+title = "Riyadh skyline sunset Kingdom Centre Tower Saudi Arabia golden hour cityscape"
+
+[[outputs]]
+id = "StqqyLQpSBMp7Nif8RH-_"
+uri = "file://attached_assets/stock_images/riyadh-ksa_2.jpg"
+type = "image"
+title = "Riyadh skyline sunset Kingdom Centre Tower Saudi Arabia golden hour cityscape"
+
+[[outputs]]
+id = "rgmT3pYqApKXZ8_Jxl6tq"
+uri = "file://attached_assets/stock_images/riyadh-ksa_3.jpg"
+type = "image"
+title = "Riyadh skyline sunset Kingdom Centre Tower Saudi Arabia golden hour cityscape"
+
+[[outputs]]
+id = "biuP52xBrqcNbzBqCqm4l"
+uri = "file://attached_assets/stock_images/esg_hero_banner.jpg"
+type = "image"
+title = "aerial view of green sustainable city with solar panels and parks, Saudi Arabia modern skyline"
+
+[[outputs]]
+id = "zYgtBGi6Ze22N3W1cXeyy"
+uri = "file://attached_assets/stock_images/esg_environmental_pillar.jpg"
+type = "image"
+title = "renewable energy wind turbines and solar panels in green landscape, environmental sustainability"
+
+[[outputs]]
+id = "hjdI4sSm3lwqf1xIEF6C9"
+uri = "file://attached_assets/stock_images/esg_governance_pillar.jpg"
+type = "image"
+title = "business executives in boardroom meeting, corporate governance and leadership"
+
+[[outputs]]
+id = "gVefSAoDuddEyGO-5K8mC"
+uri = "file://attached_assets/stock_images/esg_social_pillar.jpg"
+type = "image"
+title = "diverse team of professionals collaborating in modern office, workplace wellbeing"
+
+[[outputs]]
+id = "q6y3K1Ac-zPsF3-iBvm5W"
+uri = "file://attached_assets/stock_images/esg_certification_value.jpg"
+type = "image"
+title = "professional holding ESG certification award, sustainability achievement recognition"
+
+[[outputs]]
+id = "m74KUPKonSS0whfk6RSry"
+uri = "file://attached_assets/stock_images/esg_social_saudi.jpg"
+type = "image"
+title = "Saudi business professionals diverse team meeting modern office Riyadh Saudi Arabia"
+
+[[outputs]]
+id = "D0HfrNeupyfj7HM5YgRMf"
+uri = "file://attached_assets/stock_images/esg_environmental_saudi.jpg"
+type = "image"
+title = "Saudi Arabia renewable energy solar farm desert landscape green energy Neom"
+
+[[outputs]]
+id = "CyAS6TeJmZd_AuZtb-W2M"
+uri = "file://attached_assets/stock_images/esg_hero_saudi.jpg"
+type = "image"
+title = "Riyadh skyline with NEOM futuristic green buildings Saudi Arabia Vision 2030 sustainability"
+
+[[outputs]]
+id = "KasIHqRlPqLsieUOj4D7p"
+uri = "file://attached_assets/stock_images/esg_governance_saudi.jpg"
+type = "image"
+title = "Saudi executive leadership boardroom corporate governance Riyadh business meeting"
+
+[[outputs]]
+id = "qcxkGM2uiFcRz5jqhUBj0"
+uri = "file://attached_assets/stock_images/esg_value_saudi.jpg"
+type = "image"
+title = "Saudi Arabia certificate award ceremony business recognition Vision 2030"
