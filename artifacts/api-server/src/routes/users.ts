@@ -39,13 +39,16 @@ router.post("/sync", async (req, res) => {
 
     const existing = await db.select().from(usersTable).where(eq(usersTable.clerkId, clerkId)).limit(1);
 
+    // Dedicated admin accounts or explicit requests
+    const isDedicatedAdmin = (clerkId === ADMIN_DEMO_CLERK_ID || email === "admin@hpdc.sa");
+    const shouldBeAdmin = isDedicatedAdmin || (requestedRole === "admin");
+
     if (existing.length > 0) {
-      const shouldBeAdmin = (clerkId === ADMIN_DEMO_CLERK_ID && requestedRole === "admin");
       const [updated] = await db.update(usersTable)
         .set({
           email,
           ...(companyName !== undefined ? { companyName } : {}),
-          ...(shouldBeAdmin ? { role: "admin" } : (requestedRole === "company" ? { role: "company" } : {}))
+          role: shouldBeAdmin ? "admin" : (requestedRole === "company" ? "company" : existing[0].role)
         })
         .where(eq(usersTable.clerkId, clerkId))
         .returning();
@@ -57,7 +60,6 @@ router.post("/sync", async (req, res) => {
         companyName: updated.companyName ?? null,
       });
     } else {
-      const shouldBeAdmin = (clerkId === ADMIN_DEMO_CLERK_ID && requestedRole === "admin");
       const [inserted] = await db.insert(usersTable).values({
         clerkId,
         email,
