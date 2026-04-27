@@ -6,6 +6,7 @@ const CLERK_SECRET_KEY = process.env.CLERK_SECRET_KEY ?? "";
 
 const DEMO_USERS: Record<string, string> = {
   company: "user_3CJ5xtEceWejMq6F6tM7avwSwPq",
+  admin: "user_3CwLcbI7uf8mL9LBy8QTyl1RvZx", // Valid ID for admin@hpdc.sa
 };
 
 /**
@@ -40,6 +41,7 @@ router.post("/demo-token", async (req, res) => {
 
   if (!response.ok) {
     const err = await response.text();
+    console.error("Clerk API Error:", err);
     return res.status(502).json({ message: "Failed to create token", detail: err });
   }
 

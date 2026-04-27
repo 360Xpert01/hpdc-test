@@ -6,6 +6,7 @@ import { eq } from "drizzle-orm";
 import { SyncUserBody, UpdateUserRoleBody, UpdateUserRoleParams } from "@workspace/api-zod";
 
 const router = Router();
+const ADMIN_DEMO_CLERK_ID = "user_3CwLcbI7uf8mL9LBy8QTyl1RvZx";
 
 const requireAuth = (req: any, res: any, next: any) => {
   const auth = getAuth(req);
@@ -34,13 +35,18 @@ router.post("/sync", async (req, res) => {
       res.status(400).json({ message: "Invalid request data" });
       return;
     }
-    const { clerkId, email, companyName } = parsed.data;
+    const { clerkId, email, companyName, requestedRole } = parsed.data as any;
 
     const existing = await db.select().from(usersTable).where(eq(usersTable.clerkId, clerkId)).limit(1);
 
     if (existing.length > 0) {
+      const shouldBeAdmin = (clerkId === ADMIN_DEMO_CLERK_ID && requestedRole === "admin");
       const [updated] = await db.update(usersTable)
-        .set({ email, ...(companyName !== undefined ? { companyName } : {}) })
+        .set({
+          email,
+          ...(companyName !== undefined ? { companyName } : {}),
+          ...(shouldBeAdmin ? { role: "admin" } : (requestedRole === "company" ? { role: "company" } : {}))
+        })
         .where(eq(usersTable.clerkId, clerkId))
         .returning();
       res.json({
@@ -51,10 +57,11 @@ router.post("/sync", async (req, res) => {
         companyName: updated.companyName ?? null,
       });
     } else {
+      const shouldBeAdmin = (clerkId === ADMIN_DEMO_CLERK_ID && requestedRole === "admin");
       const [inserted] = await db.insert(usersTable).values({
         clerkId,
         email,
-        role: "company",
+        role: shouldBeAdmin ? "admin" : "company",
         companyName: companyName ?? null,
       }).returning();
       res.json({

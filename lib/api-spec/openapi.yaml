@@ -451,6 +451,9 @@ components:
         companyName:
           type: string
           nullable: true
+        requestedRole:
+          type: string
+          enum: [admin, company]
       required:
         - clerkId
         - email

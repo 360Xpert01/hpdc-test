@@ -91,8 +91,8 @@ function StageTracker({ stage, isAr }: { stage: string; isAr: boolean }) {
               )}
               <div
                 className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${done ? "bg-[#1A4D2E] border-[#1A4D2E] text-white"
-                    : active ? "bg-white border-[#1A4D2E] text-[#1A4D2E] shadow-lg ring-4 ring-[#1A4D2E]/10"
-                      : "bg-white border-gray-200 text-gray-300"
+                  : active ? "bg-white border-[#1A4D2E] text-[#1A4D2E] shadow-lg ring-4 ring-[#1A4D2E]/10"
+                    : "bg-white border-gray-200 text-gray-300"
                   }`}
               >
                 {done ? <CheckCircle2 className="w-5 h-5" /> : <Icon className="w-4 h-4" />}
@@ -413,13 +413,16 @@ export default function DashboardPage() {
       } catch { }
 
       const capturedPayload = onboardingPayload;
+      const requestedRole = localStorage.getItem("hpdc_demo_mode") as "admin" | "company" | null;
+      if (requestedRole) localStorage.removeItem("hpdc_demo_mode");
 
       // Sync user first, then post onboarding (so the user record exists in DB)
       syncUser.mutateAsync({
         data: {
           clerkId: user.id,
           email: user.primaryEmailAddress?.emailAddress ?? "",
-          companyName: (capturedPayload?.companyName) ?? user.fullName ?? undefined
+          companyName: (capturedPayload?.companyName) ?? user.fullName ?? undefined,
+          requestedRole: requestedRole ?? undefined
         }
       }).then(() => {
         if (!capturedPayload) return Promise.resolve();

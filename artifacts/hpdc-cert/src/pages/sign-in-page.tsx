@@ -28,20 +28,20 @@ export default function SignInPage() {
   const { signIn: signInHook, setActive: setActiveHook, isLoaded: signInLoaded } = useSignIn();
   const [, setLocation] = useLocation();
 
-  const [email, setEmail]             = useState("");
-  const [password, setPassword]       = useState("");
-  const [showPass, setShowPass]       = useState(false);
-  const [loading, setLoading]         = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [demoLoading, setDemoLoading] = useState<"company" | null>(null);
-  const [error, setError]             = useState("");
+  const [error, setError] = useState("");
   // OTP second-factor state
-  const [otpStep, setOtpStep]         = useState(false);
-  const [otpCode, setOtpCode]         = useState("");
-  const pendingSI                      = useRef<any>(null); // stores the sign-in attempt during OTP step
+  const [otpStep, setOtpStep] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const pendingSI = useRef<any>(null); // stores the sign-in attempt during OTP step
   // Forgot password state
-  const [forgotStep, setForgotStep]   = useState<"" | "email" | "reset">("");
+  const [forgotStep, setForgotStep] = useState<"" | "email" | "reset">("");
   const [forgotEmail, setForgotEmail] = useState("");
-  const [resetCode, setResetCode]     = useState("");
+  const [resetCode, setResetCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [showNewPass, setShowNewPass] = useState(false);
   const [forgotLoading, setForgotLoading] = useState(false);
@@ -161,7 +161,7 @@ export default function SignInPage() {
   };
 
   /* ── Demo sign-in via server-issued sign-in token (bypasses 2FA) ── */
-  const handleDemo = async (type: "company" | "individual") => {
+  const handleDemo = async (type: "company" | "admin") => {
     setError("");
     setDemoLoading(type);
     try {
@@ -173,6 +173,7 @@ export default function SignInPage() {
       });
       if (!resp.ok) throw new Error(s("فشل إنشاء رمز الدخول", "Failed to create login token", lang));
       const { token } = await resp.json() as { token: string };
+      localStorage.setItem("hpdc_demo_mode", type);
 
       // 2. Use "ticket" strategy — bypasses password & 2FA entirely
       const si = (signInLoaded && signInHook) ? signInHook : (clerk as any).client?.signIn;
@@ -344,26 +345,49 @@ export default function SignInPage() {
             <p className="text-xs font-bold text-center uppercase tracking-wider" style={{ color: GOLD }}>
               {s("دخول تجريبي سريع — بدون بيانات", "Quick Demo Access — No credentials needed", lang)}
             </p>
-            <button type="button"
-              onClick={() => handleDemo("company")}
-              disabled={demoLoading !== null || loading}
-              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all hover:shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ borderColor: `${G}30`, background: "#fff" }}>
-              {demoLoading === "company"
-                ? <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin flex-shrink-0"
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <button type="button"
+                onClick={() => handleDemo("company")}
+                disabled={demoLoading !== null || loading}
+                className="w-full flex items-center gap-3 p-3 rounded-xl border-2 transition-all hover:shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ borderColor: `${G}30`, background: "#fff" }}>
+                {demoLoading === "company"
+                  ? <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin flex-shrink-0"
                     style={{ borderColor: `${G}40`, borderTopColor: G }} />
-                : <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${G}10` }}>
-                    <Building2 className="w-5 h-5" style={{ color: G }} />
+                  : <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: `${G}10` }}>
+                    <Building2 className="w-4 h-4" style={{ color: G }} />
                   </div>}
-              <div className="text-start flex-1">
-                <p className="text-sm font-bold leading-tight" style={{ color: G }}>
-                  {s("دخول تجريبي — بوابة المنشآت", "Demo Access — Company Portal", lang)}
-                </p>
-                <p className="text-xs text-gray-400 mt-0.5">
-                  {s("استكشف المنصة كمنشأة مسجلة دون الحاجة لبيانات", "Explore the platform as a registered company", lang)}
-                </p>
-              </div>
-            </button>
+                <div className="text-start">
+                  <p className="text-xs font-bold leading-tight" style={{ color: G }}>
+                    {s("بوابة المنشآت", "Company Portal", lang)}
+                  </p>
+                  <p className="text-[10px] text-gray-400 mt-0.5 whitespace-nowrap">
+                    {s("دخول تجريبي كمنشأة", "Demo as company", lang)}
+                  </p>
+                </div>
+              </button>
+
+              <button type="button"
+                onClick={() => handleDemo("admin")}
+                disabled={demoLoading !== null || loading}
+                className="w-full flex items-center gap-3 p-3 rounded-xl border-2 transition-all hover:shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ borderColor: `${GOLD}50`, background: "#fff" }}>
+                {demoLoading === "admin"
+                  ? <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin flex-shrink-0"
+                    style={{ borderColor: `${GOLD}60`, borderTopColor: GOLD }} />
+                  : <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: `${GOLD}20` }}>
+                    <ShieldCheck className="w-4 h-4" style={{ color: GOLD }} />
+                  </div>}
+                <div className="text-start">
+                  <p className="text-xs font-bold leading-tight" style={{ color: GOLD }}>
+                    {s("بوابة الأدمن", "Admin Portal", lang)}
+                  </p>
+                  <p className="text-[10px] text-gray-400 mt-0.5 whitespace-nowrap">
+                    {s("دخول تجريبي كمسؤول", "Demo as admin", lang)}
+                  </p>
+                </div>
+              </button>
+            </div>
           </div>
 
           {/* Divider */}
@@ -539,7 +563,7 @@ export default function SignInPage() {
                 {loading
                   ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   : <>{s("تأكيد الرمز", "Verify Code", lang)}
-                      {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}</>}
+                    {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}</>}
               </button>
 
               <button type="button"
@@ -549,82 +573,82 @@ export default function SignInPage() {
               </button>
             </form>
           ) : (
-          /* ── Password Form ── */
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email */}
-            <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                {s("البريد الإلكتروني", "Email Address", lang)}
-                <span className="text-red-500 ms-0.5"> *</span>
-              </label>
-              <div className="relative">
-                <Mail className="absolute top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
-                  style={{ [isAr ? "right" : "left"]: "14px" }} />
-                <input
-                  type="email" value={email} onChange={e => setEmail(e.target.value)}
-                  required autoComplete="email"
-                  placeholder="you@example.com"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent transition-all"
-                  style={{
-                    [isAr ? "paddingRight" : "paddingLeft"]: "42px",
-                    [isAr ? "paddingLeft" : "paddingRight"]: "14px",
-                    "--tw-ring-color": `${G}50`,
-                  } as any}
-                />
+            /* ── Password Form ── */
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Email */}
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">
+                  {s("البريد الإلكتروني", "Email Address", lang)}
+                  <span className="text-red-500 ms-0.5"> *</span>
+                </label>
+                <div className="relative">
+                  <Mail className="absolute top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                    style={{ [isAr ? "right" : "left"]: "14px" }} />
+                  <input
+                    type="email" value={email} onChange={e => setEmail(e.target.value)}
+                    required autoComplete="email"
+                    placeholder="you@example.com"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent transition-all"
+                    style={{
+                      [isAr ? "paddingRight" : "paddingLeft"]: "42px",
+                      [isAr ? "paddingLeft" : "paddingRight"]: "14px",
+                      "--tw-ring-color": `${G}50`,
+                    } as any}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Password */}
-            <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                {s("كلمة المرور", "Password", lang)}
-                <span className="text-red-500 ms-0.5"> *</span>
-              </label>
-              <div className="relative">
-                <Lock className="absolute top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
-                  style={{ [isAr ? "right" : "left"]: "14px" }} />
-                <input
-                  type={showPass ? "text" : "password"} value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  required autoComplete="current-password"
-                  placeholder="••••••••"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent transition-all"
-                  style={{
-                    [isAr ? "paddingRight" : "paddingLeft"]: "42px",
-                    [isAr ? "paddingLeft" : "paddingRight"]: "42px",
-                    "--tw-ring-color": `${G}50`,
-                  } as any}
-                />
-                <button type="button" tabIndex={-1}
-                  onClick={() => setShowPass(v => !v)}
-                  className="absolute top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  style={{ [isAr ? "left" : "right"]: "14px" }}>
-                  {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {/* Password */}
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">
+                  {s("كلمة المرور", "Password", lang)}
+                  <span className="text-red-500 ms-0.5"> *</span>
+                </label>
+                <div className="relative">
+                  <Lock className="absolute top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                    style={{ [isAr ? "right" : "left"]: "14px" }} />
+                  <input
+                    type={showPass ? "text" : "password"} value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required autoComplete="current-password"
+                    placeholder="••••••••"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent transition-all"
+                    style={{
+                      [isAr ? "paddingRight" : "paddingLeft"]: "42px",
+                      [isAr ? "paddingLeft" : "paddingRight"]: "42px",
+                      "--tw-ring-color": `${G}50`,
+                    } as any}
+                  />
+                  <button type="button" tabIndex={-1}
+                    onClick={() => setShowPass(v => !v)}
+                    className="absolute top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    style={{ [isAr ? "left" : "right"]: "14px" }}>
+                    {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Forgot password link */}
+              <div className={`flex ${isAr ? "justify-start" : "justify-end"} -mt-1`}>
+                <button type="button"
+                  onClick={() => { setForgotEmail(email); setForgotStep("email"); setError(""); }}
+                  className="text-xs font-semibold hover:underline transition-colors"
+                  style={{ color: G }}>
+                  {s("نسيت كلمة المرور؟", "Forgot password?", lang)}
                 </button>
               </div>
-            </div>
 
-            {/* Forgot password link */}
-            <div className={`flex ${isAr ? "justify-start" : "justify-end"} -mt-1`}>
-              <button type="button"
-                onClick={() => { setForgotEmail(email); setForgotStep("email"); setError(""); }}
-                className="text-xs font-semibold hover:underline transition-colors"
-                style={{ color: G }}>
-                {s("نسيت كلمة المرور؟", "Forgot password?", lang)}
-              </button>
-            </div>
+              {error && <ErrorBox msg={error} />}
 
-            {error && <ErrorBox msg={error} />}
-
-            <button type="submit" disabled={loading || demoLoading !== null}
-              className="w-full py-3.5 rounded-2xl text-white font-bold text-sm flex items-center justify-center gap-2 transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-60"
-              style={{ background: G }}>
-              {loading
-                ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                : <>{s("تسجيل الدخول", "Sign In", lang)}
+              <button type="submit" disabled={loading || demoLoading !== null}
+                className="w-full py-3.5 rounded-2xl text-white font-bold text-sm flex items-center justify-center gap-2 transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-60"
+                style={{ background: G }}>
+                {loading
+                  ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  : <>{s("تسجيل الدخول", "Sign In", lang)}
                     {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}</>}
-            </button>
-          </form>
+              </button>
+            </form>
           ))}
 
           <p className="text-center text-xs text-gray-400">

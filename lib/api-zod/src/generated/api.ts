@@ -162,6 +162,7 @@ export const SyncUserBody = zod.object({
   clerkId: zod.string(),
   email: zod.string(),
   companyName: zod.string().nullish(),
+  requestedRole: zod.enum(["admin", "company"]).optional(),
 });
 
 export const SyncUserResponse = zod.object({

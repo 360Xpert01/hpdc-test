@@ -10,4 +10,5 @@ export interface SyncUserBody {
   clerkId: string;
   email: string;
   companyName?: string | null;
+  requestedRole?: "admin" | "company";
 }
