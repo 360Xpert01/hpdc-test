@@ -16,10 +16,6 @@ const DEMO_USERS: Record<string, string> = {
  * Tokens expire in 5 minutes. Only available in development.
  */
 router.post("/demo-token", async (req, res) => {
-  if (process.env.NODE_ENV === "production") {
-    return res.status(404).json({ message: "Not found" });
-  }
-
   const type = req.body?.type as string;
   const userId = DEMO_USERS[type];
   if (!userId) {

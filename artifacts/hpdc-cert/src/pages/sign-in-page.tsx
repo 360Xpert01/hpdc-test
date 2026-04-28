@@ -181,7 +181,8 @@ export default function SignInPage() {
     setDemoLoading(type);
     try {
       // 1. Ask our API to create a Clerk sign-in token for the demo account
-      const resp = await fetch(`${API_BASE}/api/auth/demo-token`, {
+      const url = API_BASE ? `${API_BASE}/api/auth/demo-token` : `${BASE}/api/auth/demo-token`;
+      const resp = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type }),
