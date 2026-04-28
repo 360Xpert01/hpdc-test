@@ -375,9 +375,6 @@ function CompanyDashboard({ me, user, applications, certificates, appsLoading, c
 export default function DashboardPage() {
   const { user, isLoaded } = useUser();
   const { isAr, dir } = useLanguage();
-  const syncUser = useSyncUser();
-  const syncAttempted = useRef(false);
-  const qc = useQueryClient();
 
   const { data: me, isLoading: meLoading } = useGetMe({
     query: { queryKey: getGetMeQueryKey(), enabled: isLoaded && !!user }
@@ -390,54 +387,6 @@ export default function DashboardPage() {
   const { data: applications, isLoading: appsLoading } = useGetMyApplications({
     query: { queryKey: getGetMyApplicationsQueryKey(), enabled: isLoaded && !!user }
   });
-
-  useEffect(() => {
-    if (isLoaded && user && !syncAttempted.current) {
-      syncAttempted.current = true;
-
-      // Read full onboarding payload saved by the sign-up wizard
-      let onboardingPayload: Record<string, string> | null = null;
-      try {
-        const raw = localStorage.getItem("hpdc_onboarding_payload");
-        if (raw) {
-          onboardingPayload = JSON.parse(raw);
-          localStorage.removeItem("hpdc_onboarding_payload");
-        }
-        // Legacy fallback
-        const legacy = localStorage.getItem("hpdc_pending_signup");
-        if (legacy && !onboardingPayload) {
-          const parsed = JSON.parse(legacy);
-          if (parsed.accountType) onboardingPayload = parsed;
-          localStorage.removeItem("hpdc_pending_signup");
-        }
-      } catch { }
-
-      const capturedPayload = onboardingPayload;
-      const requestedRole = localStorage.getItem("hpdc_demo_mode") as "admin" | "company" | null;
-      if (requestedRole) localStorage.removeItem("hpdc_demo_mode");
-
-      // Sync user first, then post onboarding (so the user record exists in DB)
-      syncUser.mutateAsync({
-        data: {
-          clerkId: user.id,
-          email: user.primaryEmailAddress?.emailAddress ?? "",
-          companyName: (capturedPayload?.companyName) ?? user.fullName ?? undefined,
-          requestedRole: requestedRole ?? undefined
-        }
-      }).then(() => {
-        if (!capturedPayload) return Promise.resolve();
-        return fetch(`${BASE}/api/users/onboarding`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify(capturedPayload),
-        });
-      }).then(() => {
-        // Refetch me so the dashboard reflects the correct account type from DB
-        qc.invalidateQueries({ queryKey: getGetMeQueryKey() });
-      }).catch(() => { });
-    }
-  }, [isLoaded, user, syncUser]);
 
   if (!isLoaded || meLoading) {
     return (

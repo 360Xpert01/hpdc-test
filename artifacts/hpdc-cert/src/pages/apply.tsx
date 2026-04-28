@@ -19,37 +19,37 @@ type Lang = "ar" | "en";
 const s = (ar: string, en: string, lang: Lang) => lang === "ar" ? ar : en;
 
 const SITE_COUNTS = [
-  { ar: "موقع واحد",   en: "1 site" },
+  { ar: "موقع واحد", en: "1 site" },
   { ar: "2 – 5 مواقع", en: "2 – 5 sites" },
   { ar: "6 – 10 مواقع", en: "6 – 10 sites" },
-  { ar: "أكثر من 10",  en: "More than 10" },
+  { ar: "أكثر من 10", en: "More than 10" },
 ];
 
 const ESG_GOALS_LIST = [
-  { ar: "تخفيض البصمة الكربونية",       en: "Reduce carbon footprint" },
-  { ar: "تحسين ظروف العمل",              en: "Improve working conditions" },
-  { ar: "تعزيز الحوكمة المؤسسية",       en: "Strengthen corporate governance" },
-  { ar: "الامتثال للوائح والقوانين",    en: "Regulatory compliance" },
-  { ar: "تحسين الصورة الذهنية للشركة",  en: "Improve company reputation" },
-  { ar: "جذب المستثمرين المستدامين",    en: "Attract ESG investors" },
+  { ar: "تخفيض البصمة الكربونية", en: "Reduce carbon footprint" },
+  { ar: "تحسين ظروف العمل", en: "Improve working conditions" },
+  { ar: "تعزيز الحوكمة المؤسسية", en: "Strengthen corporate governance" },
+  { ar: "الامتثال للوائح والقوانين", en: "Regulatory compliance" },
+  { ar: "تحسين الصورة الذهنية للشركة", en: "Improve company reputation" },
+  { ar: "جذب المستثمرين المستدامين", en: "Attract ESG investors" },
   { ar: "تطوير سلسلة الإمداد المستدامة", en: "Develop sustainable supply chain" },
-  { ar: "تحقيق أهداف رؤية 2030",        en: "Achieve Vision 2030 goals" },
-  { ar: "الحصول على العلامة الذهبية",   en: "Achieve the Gold Badge" },
+  { ar: "تحقيق أهداف رؤية 2030", en: "Achieve Vision 2030 goals" },
+  { ar: "الحصول على العلامة الذهبية", en: "Achieve the Gold Badge" },
 ];
 
 const CERT_MONTHS = [
-  { ar: "يناير",    en: "January" },
-  { ar: "فبراير",   en: "February" },
-  { ar: "مارس",     en: "March" },
-  { ar: "أبريل",    en: "April" },
-  { ar: "مايو",     en: "May" },
-  { ar: "يونيو",    en: "June" },
-  { ar: "يوليو",    en: "July" },
-  { ar: "أغسطس",    en: "August" },
-  { ar: "سبتمبر",   en: "September" },
-  { ar: "أكتوبر",   en: "October" },
-  { ar: "نوفمبر",   en: "November" },
-  { ar: "ديسمبر",   en: "December" },
+  { ar: "يناير", en: "January" },
+  { ar: "فبراير", en: "February" },
+  { ar: "مارس", en: "March" },
+  { ar: "أبريل", en: "April" },
+  { ar: "مايو", en: "May" },
+  { ar: "يونيو", en: "June" },
+  { ar: "يوليو", en: "July" },
+  { ar: "أغسطس", en: "August" },
+  { ar: "سبتمبر", en: "September" },
+  { ar: "أكتوبر", en: "October" },
+  { ar: "نوفمبر", en: "November" },
+  { ar: "ديسمبر", en: "December" },
 ];
 
 function SectionHeader({ icon: Icon, title }: { icon: any; title: string }) {
@@ -324,8 +324,8 @@ export default function ApplyPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
               {[
                 { label_ar: "المنشأة", label_en: "Organization", val: me?.companyName ?? me?.contactPersonName ?? "—" },
-                { label_ar: "القطاع",  label_en: "Sector",       val: me?.sector ?? "—" },
-                { label_ar: "الجوال",  label_en: "Phone",        val: me?.phone ?? "—" },
+                { label_ar: "القطاع", label_en: "Sector", val: me?.sector ?? "—" },
+                { label_ar: "الجوال", label_en: "Phone", val: me?.phone ?? "—" },
               ].map(row => (
                 <div key={row.label_en} className="bg-white rounded-xl px-3 py-2 border border-gray-100">
                   <p className="text-gray-400 mb-0.5">{isAr ? row.label_ar : row.label_en}</p>

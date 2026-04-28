@@ -17,50 +17,50 @@ const s = (ar: string, en: string, lang: Lang) => lang === "ar" ? ar : en;
 
 // ─── Data lists ──────────────────────────────────────────────────────────────
 const SECTORS = [
-  { ar: "النفط والغاز",              en: "Oil & Gas" },
-  { ar: "الطاقة المتجددة",          en: "Renewable Energy" },
-  { ar: "التصنيع",                   en: "Manufacturing" },
-  { ar: "الرعاية الصحية",           en: "Healthcare" },
-  { ar: "المالية والبنوك",          en: "Finance & Banking" },
-  { ar: "التقنية",                   en: "Technology" },
-  { ar: "الزراعة والغذاء",          en: "Agriculture & Food" },
-  { ar: "البناء والتشييد",          en: "Construction" },
+  { ar: "النفط والغاز", en: "Oil & Gas" },
+  { ar: "الطاقة المتجددة", en: "Renewable Energy" },
+  { ar: "التصنيع", en: "Manufacturing" },
+  { ar: "الرعاية الصحية", en: "Healthcare" },
+  { ar: "المالية والبنوك", en: "Finance & Banking" },
+  { ar: "التقنية", en: "Technology" },
+  { ar: "الزراعة والغذاء", en: "Agriculture & Food" },
+  { ar: "البناء والتشييد", en: "Construction" },
   { ar: "النقل والخدمات اللوجستية", en: "Transport & Logistics" },
-  { ar: "الاستشارات والبحث",        en: "Consulting & Research" },
-  { ar: "التعليم",                   en: "Education" },
-  { ar: "الخدمات الحكومية",         en: "Government Services" },
-  { ar: "قطاع آخر",                 en: "Other" },
+  { ar: "الاستشارات والبحث", en: "Consulting & Research" },
+  { ar: "التعليم", en: "Education" },
+  { ar: "الخدمات الحكومية", en: "Government Services" },
+  { ar: "قطاع آخر", en: "Other" },
 ];
 
 const EMP_RANGES = [
-  { ar: "أقل من 10",    en: "Less than 10" },
-  { ar: "10 – 50",      en: "10 – 50" },
-  { ar: "51 – 200",     en: "51 – 200" },
-  { ar: "201 – 500",    en: "201 – 500" },
-  { ar: "501 – 1000",   en: "501 – 1000" },
+  { ar: "أقل من 10", en: "Less than 10" },
+  { ar: "10 – 50", en: "10 – 50" },
+  { ar: "51 – 200", en: "51 – 200" },
+  { ar: "201 – 500", en: "201 – 500" },
+  { ar: "501 – 1000", en: "501 – 1000" },
   { ar: "أكثر من 1000", en: "More than 1,000" },
 ];
 
 const COUNTRIES = [
   { ar: "المملكة العربية السعودية", en: "Saudi Arabia" },
   { ar: "الإمارات العربية المتحدة", en: "UAE" },
-  { ar: "الكويت",                   en: "Kuwait" },
-  { ar: "قطر",                      en: "Qatar" },
-  { ar: "البحرين",                  en: "Bahrain" },
-  { ar: "عُمان",                    en: "Oman" },
-  { ar: "مصر",                      en: "Egypt" },
-  { ar: "الأردن",                   en: "Jordan" },
-  { ar: "أخرى",                     en: "Other" },
+  { ar: "الكويت", en: "Kuwait" },
+  { ar: "قطر", en: "Qatar" },
+  { ar: "البحرين", en: "Bahrain" },
+  { ar: "عُمان", en: "Oman" },
+  { ar: "مصر", en: "Egypt" },
+  { ar: "الأردن", en: "Jordan" },
+  { ar: "أخرى", en: "Other" },
 ];
 
 const ESG_REASONS = [
-  { ar: "متطلبات تنظيمية وامتثال",  en: "Regulatory & compliance requirements" },
-  { ar: "تطوير مهني وتدريب",        en: "Professional development & training" },
-  { ar: "بحث أكاديمي",              en: "Academic research" },
-  { ar: "تقديم استشارات ESG",       en: "ESG consulting services" },
-  { ar: "اهتمام شخصي بالاستدامة",  en: "Personal interest in sustainability" },
-  { ar: "ممثّل عن جهة / شركة",      en: "Representing an organization" },
-  { ar: "صحافة ووسائل إعلام",       en: "Journalism & media" },
+  { ar: "متطلبات تنظيمية وامتثال", en: "Regulatory & compliance requirements" },
+  { ar: "تطوير مهني وتدريب", en: "Professional development & training" },
+  { ar: "بحث أكاديمي", en: "Academic research" },
+  { ar: "تقديم استشارات ESG", en: "ESG consulting services" },
+  { ar: "اهتمام شخصي بالاستدامة", en: "Personal interest in sustainability" },
+  { ar: "ممثّل عن جهة / شركة", en: "Representing an organization" },
+  { ar: "صحافة ووسائل إعلام", en: "Journalism & media" },
 ];
 
 // ─── Small UI helpers ─────────────────────────────────────────────────────────
@@ -129,19 +129,17 @@ function StepBar({ current, total, labels }: { current: number; total: number; l
       {Array.from({ length: total }).map((_, i) => (
         <div key={i} className="flex items-center flex-1">
           <div className="relative flex flex-col items-center flex-shrink-0">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all duration-300 ${
-              i < current ? `text-white border-transparent` :
-              i === current ? `border-2 text-white` :
-              `border-gray-200 text-gray-400 bg-white`
-            }`} style={{
-              background: i < current ? G : i === current ? G : "white",
-              borderColor: i <= current ? G : "#e5e7eb",
-            }}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all duration-300 ${i < current ? `text-white border-transparent` :
+                i === current ? `border-2 text-white` :
+                  `border-gray-200 text-gray-400 bg-white`
+              }`} style={{
+                background: i < current ? G : i === current ? G : "white",
+                borderColor: i <= current ? G : "#e5e7eb",
+              }}>
               {i < current ? <Check className="w-4 h-4" /> : i + 1}
             </div>
-            <span className={`absolute -bottom-5 text-[10px] font-semibold whitespace-nowrap ${
-              i <= current ? "text-gray-700" : "text-gray-400"
-            }`}>{labels[i]}</span>
+            <span className={`absolute -bottom-5 text-[10px] font-semibold whitespace-nowrap ${i <= current ? "text-gray-700" : "text-gray-400"
+              }`}>{labels[i]}</span>
           </div>
           {i < total - 1 && (
             <div className="flex-1 h-0.5 mx-1 transition-all duration-300"
@@ -271,7 +269,7 @@ export default function SignUpPage() {
           const payload = { accountType, companyName, companyRegistrationNumber: regNumber, sector, numberOfEmployees: employees, country, website, contactPersonName: contactPerson, phone };
           try {
             localStorage.setItem("hpdc_onboarding_payload", JSON.stringify(payload));
-          } catch {}
+          } catch { }
           // Activate the Clerk session
           await (clerk as any).setActive({ session: result.createdSessionId });
           setLocation("/dashboard");
@@ -357,9 +355,8 @@ export default function SignUpPage() {
             <div className="space-y-2">
               {STEP_LABELS.map((label, i) => (
                 <div key={i} className="flex items-center gap-2.5">
-                  <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${
-                    i < step ? "text-white" : i === step ? "text-white" : "text-gray-500"
-                  }`} style={{ background: i <= step ? GOLD : "#ffffff15" }}>
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${i < step ? "text-white" : i === step ? "text-white" : "text-gray-500"
+                    }`} style={{ background: i <= step ? GOLD : "#ffffff15" }}>
                     {i < step ? <Check className="w-3 h-3" /> : i + 1}
                   </div>
                   <span className={`text-xs ${i === step ? "text-white font-bold" : i < step ? "line-through" : "text-gray-500"}`} style={{ color: i === step ? "#fff" : undefined }}>
@@ -419,71 +416,71 @@ export default function SignUpPage() {
                 </div>
 
                 <div className="space-y-4">
-                    {/* Company section */}
-                    <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-4">
-                      <p className="text-xs font-bold uppercase tracking-widest" style={{ color: G }}>
-                        {s("معلومات الشركة", "Company Information", lang)}
-                      </p>
+                  {/* Company section */}
+                  <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-4">
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: G }}>
+                      {s("معلومات الشركة", "Company Information", lang)}
+                    </p>
 
+                    <div>
+                      <FieldLabel required>{s("اسم الشركة / المنشأة", "Company / Organization Name", lang)}</FieldLabel>
+                      <TextInput value={companyName} onChange={setCompanyName} required icon={Building2}
+                        placeholder={s("شركة...", "Company Ltd...", lang)} />
+                    </div>
+
+                    <div>
+                      <FieldLabel required>{s("رقم السجل التجاري", "Commercial Registration No.", lang)}</FieldLabel>
+                      <TextInput value={regNumber} onChange={setRegNumber} required icon={Hash}
+                        placeholder="1010xxxxxxx" />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <FieldLabel required>{s("اسم الشركة / المنشأة", "Company / Organization Name", lang)}</FieldLabel>
-                        <TextInput value={companyName} onChange={setCompanyName} required icon={Building2}
-                          placeholder={s("شركة...", "Company Ltd...", lang)} />
+                        <FieldLabel required>{s("القطاع", "Sector", lang)}</FieldLabel>
+                        <SelectInput value={sector} onChange={setSector}
+                          options={SECTORS} placeholder={s("اختر", "Select", lang)} />
                       </div>
-
                       <div>
-                        <FieldLabel required>{s("رقم السجل التجاري", "Commercial Registration No.", lang)}</FieldLabel>
-                        <TextInput value={regNumber} onChange={setRegNumber} required icon={Hash}
-                          placeholder="1010xxxxxxx" />
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <FieldLabel required>{s("القطاع", "Sector", lang)}</FieldLabel>
-                          <SelectInput value={sector} onChange={setSector}
-                            options={SECTORS} placeholder={s("اختر", "Select", lang)} />
-                        </div>
-                        <div>
-                          <FieldLabel required>{s("عدد الموظفين", "Employees", lang)}</FieldLabel>
-                          <SelectInput value={employees} onChange={setEmployees}
-                            options={EMP_RANGES} placeholder={s("اختر", "Select", lang)} />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <FieldLabel required>{s("الدولة", "Country", lang)}</FieldLabel>
-                          <SelectInput value={country} onChange={setCountry}
-                            options={COUNTRIES} placeholder={s("اختر", "Select", lang)} />
-                        </div>
-                        <div>
-                          <FieldLabel>{s("الموقع الإلكتروني", "Website", lang)}</FieldLabel>
-                          <TextInput value={website} onChange={setWebsite} icon={Globe}
-                            placeholder="https://..." />
-                        </div>
+                        <FieldLabel required>{s("عدد الموظفين", "Employees", lang)}</FieldLabel>
+                        <SelectInput value={employees} onChange={setEmployees}
+                          options={EMP_RANGES} placeholder={s("اختر", "Select", lang)} />
                       </div>
                     </div>
 
-                    {/* Contact section */}
-                    <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-4">
-                      <p className="text-xs font-bold uppercase tracking-widest" style={{ color: G }}>
-                        {s("بيانات المسؤول", "Contact Person", lang)}
-                      </p>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <FieldLabel required>{s("اسم المسؤول", "Contact Name", lang)}</FieldLabel>
-                          <TextInput value={contactPerson} onChange={setContactPerson} required icon={User}
-                            placeholder={s("الاسم الكامل", "Full name", lang)} />
-                        </div>
-                        <div>
-                          <FieldLabel required>{s("رقم الجوال", "Phone", lang)}</FieldLabel>
-                          <TextInput value={phone} onChange={setPhone} type="tel" required icon={Phone}
-                            placeholder="+966 5X XXX" />
-                        </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <FieldLabel required>{s("الدولة", "Country", lang)}</FieldLabel>
+                        <SelectInput value={country} onChange={setCountry}
+                          options={COUNTRIES} placeholder={s("اختر", "Select", lang)} />
+                      </div>
+                      <div>
+                        <FieldLabel>{s("الموقع الإلكتروني", "Website", lang)}</FieldLabel>
+                        <TextInput value={website} onChange={setWebsite} icon={Globe}
+                          placeholder="https://..." />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Contact section */}
+                  <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-4">
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: G }}>
+                      {s("بيانات المسؤول", "Contact Person", lang)}
+                    </p>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <FieldLabel required>{s("اسم المسؤول", "Contact Name", lang)}</FieldLabel>
+                        <TextInput value={contactPerson} onChange={setContactPerson} required icon={User}
+                          placeholder={s("الاسم الكامل", "Full name", lang)} />
+                      </div>
+                      <div>
+                        <FieldLabel required>{s("رقم الجوال", "Phone", lang)}</FieldLabel>
+                        <TextInput value={phone} onChange={setPhone} type="tel" required icon={Phone}
+                          placeholder="+966 5X XXX" />
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
             )}
 
             {/* ── STEP 2: Credentials ── */}
@@ -531,7 +528,7 @@ export default function SignUpPage() {
                       placeholder="••••••••" />
                     {password.length > 0 && (
                       <div className="mt-2 flex gap-1">
-                        {[1,2,3,4].map(i => (
+                        {[1, 2, 3, 4].map(i => (
                           <div key={i} className="flex-1 h-1 rounded-full transition-all"
                             style={{
                               background: password.length >= i * 2
@@ -596,7 +593,7 @@ export default function SignUpPage() {
                       const su = (clerk as any).client?.signUp;
                       if (su) await su.prepareEmailAddressVerification({ strategy: "email_code" });
                       setError(s("تم إعادة إرسال الرمز ✓", "Code resent ✓", lang));
-                    } catch {}
+                    } catch { }
                   }}
                   className="w-full text-xs text-gray-400 hover:text-gray-600 transition-colors py-2">
                   {s("لم تستلم الرمز؟ أعد الإرسال", "Didn't receive the code? Resend", lang)}

@@ -16,40 +16,40 @@ type Lang = "ar" | "en";
 const s = (ar: string, en: string, lang: Lang) => lang === "ar" ? ar : en;
 
 const SECTORS = [
-  { ar: "النفط والغاز",              en: "Oil & Gas" },
-  { ar: "الطاقة المتجددة",          en: "Renewable Energy" },
-  { ar: "التصنيع",                   en: "Manufacturing" },
-  { ar: "الرعاية الصحية",           en: "Healthcare" },
-  { ar: "المالية والبنوك",          en: "Finance & Banking" },
-  { ar: "التقنية",                   en: "Technology" },
-  { ar: "الزراعة والغذاء",          en: "Agriculture & Food" },
-  { ar: "البناء والتشييد",          en: "Construction" },
+  { ar: "النفط والغاز", en: "Oil & Gas" },
+  { ar: "الطاقة المتجددة", en: "Renewable Energy" },
+  { ar: "التصنيع", en: "Manufacturing" },
+  { ar: "الرعاية الصحية", en: "Healthcare" },
+  { ar: "المالية والبنوك", en: "Finance & Banking" },
+  { ar: "التقنية", en: "Technology" },
+  { ar: "الزراعة والغذاء", en: "Agriculture & Food" },
+  { ar: "البناء والتشييد", en: "Construction" },
   { ar: "النقل والخدمات اللوجستية", en: "Transport & Logistics" },
-  { ar: "الاستشارات والبحث",        en: "Consulting & Research" },
-  { ar: "التعليم",                   en: "Education" },
-  { ar: "الخدمات الحكومية",         en: "Government Services" },
-  { ar: "قطاع آخر",                 en: "Other" },
+  { ar: "الاستشارات والبحث", en: "Consulting & Research" },
+  { ar: "التعليم", en: "Education" },
+  { ar: "الخدمات الحكومية", en: "Government Services" },
+  { ar: "قطاع آخر", en: "Other" },
 ];
 
 const EMP_RANGES = [
-  { ar: "أقل من 10",    en: "Less than 10" },
-  { ar: "10 – 50",      en: "10 – 50" },
-  { ar: "51 – 200",     en: "51 – 200" },
-  { ar: "201 – 500",    en: "201 – 500" },
-  { ar: "501 – 1000",   en: "501 – 1000" },
+  { ar: "أقل من 10", en: "Less than 10" },
+  { ar: "10 – 50", en: "10 – 50" },
+  { ar: "51 – 200", en: "51 – 200" },
+  { ar: "201 – 500", en: "201 – 500" },
+  { ar: "501 – 1000", en: "501 – 1000" },
   { ar: "أكثر من 1000", en: "More than 1,000" },
 ];
 
 const COUNTRIES = [
   { ar: "المملكة العربية السعودية", en: "Saudi Arabia" },
-  { ar: "الإمارات",                 en: "UAE" },
-  { ar: "الكويت",                   en: "Kuwait" },
-  { ar: "قطر",                      en: "Qatar" },
-  { ar: "البحرين",                  en: "Bahrain" },
-  { ar: "عُمان",                    en: "Oman" },
-  { ar: "مصر",                      en: "Egypt" },
-  { ar: "الأردن",                   en: "Jordan" },
-  { ar: "أخرى",                     en: "Other" },
+  { ar: "الإمارات", en: "UAE" },
+  { ar: "الكويت", en: "Kuwait" },
+  { ar: "قطر", en: "Qatar" },
+  { ar: "البحرين", en: "Bahrain" },
+  { ar: "عُمان", en: "Oman" },
+  { ar: "مصر", en: "Egypt" },
+  { ar: "الأردن", en: "Jordan" },
+  { ar: "أخرى", en: "Other" },
 ];
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -298,9 +298,9 @@ export default function ProfileSetupPage() {
               {submitting
                 ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 : <>
-                    {s("حفظ والانتقال للوحة التحكم", "Save & Go to Dashboard", lang)}
-                    {lang === "ar" ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
-                  </>}
+                  {s("حفظ والانتقال للوحة التحكم", "Save & Go to Dashboard", lang)}
+                  {lang === "ar" ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                </>}
             </button>
           </div>
 

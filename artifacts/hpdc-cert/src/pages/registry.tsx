@@ -157,8 +157,8 @@ const ALL_COUNTRIES = [
 ];
 
 const STATUS_CFG = {
-  valid:     { color: "#6BAE45", bg: "#6BAE4515", border: "#6BAE4540", icon: <ShieldCheck className="w-4 h-4" />, labelKey: "certified.valid" },
-  expired:   { color: "#DC2626", bg: "#DC262615", border: "#DC262640", icon: <XCircle className="w-4 h-4" />,    labelKey: "certified.expired" },
+  valid: { color: "#6BAE45", bg: "#6BAE4515", border: "#6BAE4540", icon: <ShieldCheck className="w-4 h-4" />, labelKey: "certified.valid" },
+  expired: { color: "#DC2626", bg: "#DC262615", border: "#DC262640", icon: <XCircle className="w-4 h-4" />, labelKey: "certified.expired" },
   suspended: { color: "#C9A84C", bg: "#C9A84C15", border: "#C9A84C40", icon: <AlertTriangle className="w-4 h-4" />, labelKey: "certified.suspended" },
 };
 
@@ -212,7 +212,7 @@ export default function RegistryPage() {
         }));
         setCerts(mapped);
       })
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   }, []);
 

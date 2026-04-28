@@ -25,7 +25,7 @@ export function Header() {
       className={`text-sm font-semibold transition-colors pb-0.5 ${
         location === href
           ? "text-[#1A4D2E] border-b-2 border-[#C9A84C]"
-          : "text-gray-600 hover:text-[#1A4D2E]"
+          : "text-gray-600 hover:text-[#1A$4D2E]"
       }`}
     >
       {label}

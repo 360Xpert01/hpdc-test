@@ -5,7 +5,7 @@ const router = Router();
 const CLERK_SECRET_KEY = process.env.CLERK_SECRET_KEY ?? "";
 
 const DEMO_USERS: Record<string, string> = {
-  company: "user_3CJ5xtEceWejMq6F6tM7avwSwPq",
+  company: "user_3CfvXqQ8Rrk8FUG4ZpiOmREJfK1", // Valid ID for zahidrahimoon22@gmail.com
   admin: "user_3CwLcbI7uf8mL9LBy8QTyl1RvZx", // Valid ID for admin@hpdc.sa
 };
 

@@ -1,7 +1,8 @@
 import { Switch, Route, useLocation, Router as WouterRouter, Redirect } from "wouter";
 import { QueryClient, QueryClientProvider, useQueryClient } from "@tanstack/react-query";
-import { ClerkProvider, Show, useClerk } from "@clerk/react";
-import { useEffect } from "react";
+import { ClerkProvider, Show, useClerk, useUser } from "@clerk/react";
+import { useEffect, useRef } from "react";
+import { useSyncUser } from "@workspace/api-client-react";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -81,6 +82,53 @@ function ApplyRoute() {
   );
 }
 
+function UserSync() {
+  const { user, isLoaded } = useUser();
+  const { mutateAsync: syncUser } = useSyncUser();
+  const syncAttempted = useRef(false);
+  const qc = useQueryClient();
+  const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+  useEffect(() => {
+    if (isLoaded && user && !syncAttempted.current) {
+      syncAttempted.current = true;
+      
+      let onboardingPayload: Record<string, string> | null = null;
+      try {
+        const raw = localStorage.getItem("hpdc_onboarding_payload");
+        if (raw) {
+          onboardingPayload = JSON.parse(raw);
+          localStorage.removeItem("hpdc_onboarding_payload");
+        }
+      } catch { }
+
+      const requestedRole = localStorage.getItem("hpdc_demo_mode") as "admin" | "company" | null;
+      if (requestedRole) localStorage.removeItem("hpdc_demo_mode");
+
+      syncUser({
+        data: {
+          clerkId: user.id,
+          email: user.primaryEmailAddress?.emailAddress ?? "",
+          companyName: (onboardingPayload?.companyName) ?? user.fullName ?? undefined,
+          requestedRole: requestedRole ?? undefined
+        }
+      }).then(() => {
+        if (!onboardingPayload) return Promise.resolve();
+        return fetch(`${basePath}/api/users/onboarding`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(onboardingPayload),
+        });
+      }).then(() => {
+        qc.invalidateQueries({ queryKey: ["/api/users/me"] });
+      }).catch(() => { });
+    }
+  }, [isLoaded, user, syncUser, qc, basePath]);
+
+  return null;
+}
+
 function ClerkQueryClientCacheInvalidator() {
   const clerk = useClerk();
   const queryClient = useQueryClient();
@@ -104,6 +152,7 @@ function ClerkProviderWithRoutes() {
       routerPush={(to) => setLocation(stripBase(to))}
       routerReplace={(to) => setLocation(stripBase(to), { replace: true })}
     >
+      <UserSync />
       <ClerkQueryClientCacheInvalidator />
       <Switch>
         <Route path="/" component={HomeRedirect} />

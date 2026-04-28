@@ -114,6 +114,27 @@ export default function HomePage() {
                     {t(lang, "hero.cta.verify")}
                   </Button>
                 </div>
+
+                {/* Demo Quick Access */}
+                <div className="mt-8 pt-8 border-t border-[#1A4D2E]/10">
+                  <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: "#1A4D2E88" }}>
+                    {lang === "ar" ? "تجربة المنصة (بدون تسجيل)" : "Explore the Platform (Demo Mode)"}
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Link href="/sign-in?demo=company">
+                      <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-[#1A4D2E22] text-sm font-bold shadow-sm hover:shadow-md transition-all active:scale-95" style={{ color: "#1A4D2E" }}>
+                        <Building2 className="w-4 h-4" />
+                        {lang === "ar" ? "دخول تجريبي: منشأة" : "Demo as Company"}
+                      </button>
+                    </Link>
+                    <Link href="/sign-in?demo=admin">
+                      <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-[#C9A84C44] text-sm font-bold shadow-sm hover:shadow-md transition-all active:scale-95" style={{ color: "#C9A84C" }}>
+                        <ShieldCheck className="w-4 h-4" />
+                        {lang === "ar" ? "دخول تجريبي: مسؤول" : "Demo as Admin"}
+                      </button>
+                    </Link>
+                  </div>
+                </div>
               </div>
 
               {/* Image side */}

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useClerk, useSignIn } from "@clerk/react";
 import { useLocation, Link } from "wouter";
 import { useLanguage } from "@/contexts/language-context";
@@ -46,6 +46,21 @@ export default function SignInPage() {
   const [showNewPass, setShowNewPass] = useState(false);
   const [forgotLoading, setForgotLoading] = useState(false);
   const [forgotSuccess, setForgotSuccess] = useState(false);
+
+  // Auto-trigger demo if param is present
+  useEffect(() => {
+    if (!signInLoaded) return;
+    const searchString = window.location.search;
+    const params = new URLSearchParams(searchString);
+    const demoType = params.get("demo");
+    if (demoType === "admin" || demoType === "company") {
+      // Small delay to ensure Clerk is ready
+      const timer = setTimeout(() => {
+        handleDemo(demoType as "admin" | "company");
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [signInLoaded]);
 
   /* ── Shared helpers ── */
   const withTimeout = <T,>(p: Promise<T>, ms: number): Promise<T> =>
@@ -171,7 +186,10 @@ export default function SignInPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type }),
       });
-      if (!resp.ok) throw new Error(s("فشل إنشاء رمز الدخول", "Failed to create login token", lang));
+      if (!resp.ok) {
+        const errorData = await resp.json().catch(() => ({}));
+        throw new Error(errorData.message || s("فشل إنشاء رمز الدخول", "Failed to create login token", lang));
+      }
       const { token } = await resp.json() as { token: string };
       localStorage.setItem("hpdc_demo_mode", type);
 
@@ -186,7 +204,9 @@ export default function SignInPage() {
         } else {
           await (clerk as any).setActive({ session: result.createdSessionId });
         }
-        setLocation("/dashboard");
+        
+        // Redirect based on role
+        setLocation(type === "admin" ? "/admin" : "/dashboard");
       } else {
         throw new Error(s("فشل الدخول التجريبي", "Demo login failed", lang));
       }
